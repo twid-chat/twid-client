@@ -5,7 +5,19 @@ on:
     branches: [master]
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: client
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hallee/eslint-action@1.0.3
+        with:
+          repo-token: ${{secrets.GITHUB_TOKEN}}
+          source-root: client
   deploy-to-production:
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
