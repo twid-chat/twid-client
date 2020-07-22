@@ -1,0 +1,36 @@
+name: Pull Request
+on:
+  pull_request:
+
+jobs:
+  # lint:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: client
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: hallee/eslint-action@1.0.3
+  #       with:
+  #         repo-token: ${{secrets.GITHUB_TOKEN}}
+  #         source-root: client
+  deploy-to-staging:
+    # needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: yarn
+      - name: Build
+        run: yarn build
+      - name: Deploy
+        uses: nwtgck/actions-netlify@v1.1
+        with:
+          deploy-message: ${{ github.event.pull_request.title }}
+          enable-pull-request-comment: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          publish-dir: 'build'
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
