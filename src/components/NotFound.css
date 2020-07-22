@@ -1,0 +1,17 @@
+.not-found {
+  height: 92vh;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+p {
+  align-self: flex-end;
+  justify-self: center;
+  font-size: 2rem;
+}
+
+.not-found .MuiSvgIcon-root {
+  justify-self: center;
+  width: 3em;
+  height: 3em;
+}

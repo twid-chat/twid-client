@@ -1,0 +1,16 @@
+.nav-bar {
+  height: 8vh;
+}
+
+.nav-bar .MuiButton-label {
+  color: white;
+}
+
+.MuiToolbar-regular.toolbar {
+  display: grid;
+  grid-template-columns: auto min-content;
+}
+
+.github-logo {
+  height: 35px;
+}

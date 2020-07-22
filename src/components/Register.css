@@ -1,0 +1,21 @@
+.register {
+  display: flex;
+  justify-content: center;
+  padding-top: 10vh;
+  background: #f0f0f0;
+  height: 82vh;
+}
+
+.MuiCard-root {
+  width: 450px;
+  height: fit-content;
+}
+
+.MuiButtonBase-root.register-button {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.submitting {
+  padding-left: 10px;
+}
