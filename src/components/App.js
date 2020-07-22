@@ -99,6 +99,7 @@ export const App = () => {
         ) : (
           <Router>
             <NavBar />
+            <div>Hello Test</div>
             <Routes>
               <PrivateRoute path="/" element={<Chat />} />
               <PublicRoute path="/login" element={<Login />} />
