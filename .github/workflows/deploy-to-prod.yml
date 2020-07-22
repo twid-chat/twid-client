@@ -5,27 +5,22 @@ on:
     branches: [master]
 
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: client
-    steps:
-      - uses: actions/checkout@v2
-      - uses: hallee/eslint-action@1.0.3
-        with:
-          repo-token: ${{secrets.GITHUB_TOKEN}}
-          source-root: client
   deploy-to-production:
-    needs: lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: nwtgck/actions-netlify@v1.1
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: yarn
+      - name: Build
+        run: yarn build
+      - name: Deploy
+        uses: nwtgck/actions-netlify@v1.1
         with:
-          publish-dir: 'build'
-          production-branch: master
+          deploy-message: ${{ github.event.head_commit.message }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          production-branch: master
+          publish-dir: 'build'
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
