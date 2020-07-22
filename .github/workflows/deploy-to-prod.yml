@@ -18,8 +18,10 @@ jobs:
         uses: nwtgck/actions-netlify@v1.1
         with:
           deploy-message: ${{ github.event.head_commit.message }}
+          enable-commit-comment: false
           github-token: ${{ secrets.GITHUB_TOKEN }}
           production-branch: master
+          production-deploy: true
           publish-dir: 'build'
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
