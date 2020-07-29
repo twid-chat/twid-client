@@ -8,6 +8,12 @@
 $ git clone git@github.com:twid-chat/twid-client.git
 ```
 
+#### Change directory to `twid-client`
+
+```sh
+$ cd twid-client
+```
+
 #### Install dependencies
 
 ```sh
