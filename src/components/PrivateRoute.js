@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Navigate, Route } from 'react-router-dom';
-import { CircularProgress } from '@material-ui/core';
+import Loader from './Loader';
 import { AuthContext, UserContext } from '../contexts';
 
 export const PrivateRoute = ({ ...props }) => {
@@ -13,7 +13,7 @@ export const PrivateRoute = ({ ...props }) => {
       <Route {...props} />
     ) : (
       <div className="loading">
-        <CircularProgress size={64} />
+        <Loader size={64} />
       </div>
     );
   }

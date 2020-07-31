@@ -5,7 +5,6 @@ import {
   Card,
   CardContent,
   CardHeader,
-  CircularProgress,
   Snackbar,
   TextField,
 } from '@material-ui/core';
@@ -13,6 +12,7 @@ import { Alert } from '@material-ui/lab';
 import { AuthContext } from '../contexts';
 import { registerSchema } from '../schemas';
 import './Register.css';
+import Loader from './Loader';
 
 export const Register = () => {
   const [error, setError] = useState({ showAlert: false, message: '' });
@@ -152,7 +152,7 @@ export const Register = () => {
             >
               {isSubmitting ? (
                 <>
-                  <CircularProgress size={14} />
+                  <Loader size={14} />
                   <span className="submitting">Registering...</span>
                 </>
               ) : (
