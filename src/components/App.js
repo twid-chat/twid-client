@@ -70,11 +70,7 @@ export const App = () => {
   }, [userData, userError]);
 
   if (logoutLoading) {
-    return (
-      <>
-        <Loader size={64} />
-      </>
-    );
+    return <Loader size={64} />;
   }
 
   return (
@@ -93,7 +89,7 @@ export const App = () => {
     >
       <UserContext.Provider value={{ setUser, user }}>
         {loading ? (
-          <Loader />
+          <Loader size={14} />
         ) : (
           <Router>
             <NavBar />

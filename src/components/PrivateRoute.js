@@ -12,9 +12,7 @@ export const PrivateRoute = ({ ...props }) => {
       // eslint-disable-next-line react/jsx-props-no-spreading
       <Route {...props} />
     ) : (
-      <div className="loading">
-        <Loader size={64} />
-      </div>
+      <Loader size={64} />
     );
   }
 
