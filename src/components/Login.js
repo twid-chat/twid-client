@@ -5,6 +5,7 @@ import {
   Card,
   CardContent,
   CardHeader,
+  CircularProgress,
   Snackbar,
   TextField,
 } from '@material-ui/core';
@@ -12,7 +13,6 @@ import { Alert } from '@material-ui/lab';
 import { AuthContext } from '../contexts';
 import { loginSchema } from '../schemas';
 import './Login.css';
-import Loader from './Loader';
 
 export const Login = () => {
   const [error, setError] = useState({ showAlert: false, message: '' });
@@ -128,7 +128,7 @@ export const Login = () => {
             >
               {isSubmitting ? (
                 <>
-                  <Loader size={14} />
+                  <CircularProgress size={14} />
                   <span className="submitting">Logging In...</span>
                 </>
               ) : (
