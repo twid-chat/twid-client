@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { CircularProgress } from '@material-ui/core';
+import Loader from './Loader';
 import { Chat } from './Chat';
 import { Login } from './Login';
 import { NavBar } from './NavBar';
@@ -70,11 +70,7 @@ export const App = () => {
   }, [userData, userError]);
 
   if (logoutLoading) {
-    return (
-      <div className="loading">
-        <CircularProgress size={64} />
-      </div>
-    );
+    return <Loader size={64} />;
   }
 
   return (
@@ -93,9 +89,7 @@ export const App = () => {
     >
       <UserContext.Provider value={{ setUser, user }}>
         {loading ? (
-          <div className="loading">
-            <CircularProgress size={64} />
-          </div>
+          <Loader size={64} />
         ) : (
           <Router>
             <NavBar />
