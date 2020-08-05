@@ -89,7 +89,7 @@ export const App = () => {
     >
       <UserContext.Provider value={{ setUser, user }}>
         {loading ? (
-          <Loader size={14} />
+          <Loader size={64} />
         ) : (
           <Router>
             <NavBar />
