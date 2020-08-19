@@ -59,6 +59,7 @@ export const App = () => {
     if (isLoggedIn && accessToken) {
       getUser();
       socket = io('http://localhost:4002', {
+        path: '/socket',
         query: {
           accessToken,
         },

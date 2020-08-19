@@ -16,7 +16,8 @@ module.exports = app => {
     }),
   );
   app.use(
-    createProxyMiddleware('/ws', {
+    '/socket',
+    createProxyMiddleware({
       target: 'http://localhost:4002',
       ws: true,
     }),
