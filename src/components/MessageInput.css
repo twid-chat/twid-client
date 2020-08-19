@@ -1,0 +1,19 @@
+.message-form {
+  padding: 0 25px 20px 25px;
+}
+
+.message-input-control {
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  column-gap: 5px;
+}
+
+.message-text-input {
+  background-color: #fafafa;
+}
+
+@media only screen and (max-width: 768px) {
+  .message-input {
+    padding: 0;
+  }
+}

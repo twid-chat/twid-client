@@ -1,0 +1,6 @@
+.chat {
+  height: 92vh;
+  display: grid;
+  grid-template-rows: auto max-content;
+  background-color: #eeeeee;
+}

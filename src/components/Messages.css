@@ -1,0 +1,26 @@
+.message-scroller {
+  padding-right: 25px;
+  padding-left: 25px;
+  min-height: min-content;
+  max-height: 100%;
+  overflow: scroll;
+  align-self: end;
+}
+
+.no-messages {
+  display: grid;
+  align-self: center;
+  justify-items: center;
+  grid-row-gap: 5px;
+}
+
+.no-messages-icon.MuiSvgIcon-root {
+  font-size: 40px;
+}
+
+@media only screen and (max-width: 768px) {
+  .message-scroller {
+    padding-right: 0;
+    padding-left: 5px;
+  }
+}

@@ -1,0 +1,15 @@
+.username {
+  font-weight: 800;
+  color: #424242;
+}
+
+.message {
+  padding-left: 5px;
+  color: #424242;
+}
+
+.timestamp {
+  font-size: 12px;
+  margin-left: 10px;
+  color: #616161;
+}

@@ -15,4 +15,10 @@ module.exports = app => {
       changeOrigin: true,
     }),
   );
+  app.use(
+    createProxyMiddleware('/ws', {
+      target: 'http://localhost:4002',
+      ws: true,
+    }),
+  );
 };
