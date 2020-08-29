@@ -11,6 +11,7 @@ import { PublicRoute } from './PublicRoute';
 import { PrivateRoute } from './PrivateRoute';
 import { useAuth, useUser } from '../hooks';
 import { AuthContext, SocketContext, UserContext } from '../contexts';
+import { computeSocketUrl } from '../computeUrl';
 import './App.css';
 
 let socket;
@@ -58,7 +59,7 @@ export const App = () => {
   useEffect(() => {
     if (isLoggedIn && accessToken) {
       getUser();
-      socket = io('http://localhost:4002', {
+      socket = io(computeSocketUrl(), {
         path: '/socket',
         query: {
           accessToken,

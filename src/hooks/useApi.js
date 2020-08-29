@@ -1,16 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useAxios } from 'use-axios-client';
 import { useAuth } from './useAuth';
-
-const environment = process.env.REACT_APP_ENV;
-const serverUrl = process.env.REACT_APP_SERVER_URL;
-
-const computeUrl = path => {
-  if (environment === 'development') {
-    return path;
-  }
-  return `${serverUrl}${path}`;
-};
+import { computeUrl } from '../computeUrl';
 
 export const useApi = path => {
   const { accessToken, getToken } = useAuth();
