@@ -43,7 +43,7 @@ export const NavBar = () => {
       <Toolbar className="toolbar">
         {renderToolbarOptions()}
         <a
-          href="https://github.com/jpangelle/twid"
+          href="https://github.com/twid-chat"
           rel="noopener noreferrer"
           target="_blank"
         >
