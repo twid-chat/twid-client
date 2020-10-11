@@ -11,7 +11,7 @@ export const Chat = () => {
   const [loading, setLoading] = useState(true);
   const [messages, setMessages] = useState([]);
   const { socket } = useContext(SocketContext);
-  const { user } = useContext(UserContext);
+  const { userData } = useContext(UserContext);
 
   socket.on('get-messages', allMessages => {
     setMessages(allMessages);
@@ -42,7 +42,7 @@ export const Chat = () => {
     <div className="chat">
       {messages ? (
         <Messages
-          currentUser={user}
+          currentUser={userData}
           deleteMessage={deleteMessage}
           messages={messages}
         />

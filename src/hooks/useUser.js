@@ -1,28 +1,27 @@
-import { useLazyAxios } from 'use-axios-client';
-import { useAuth } from './useAuth';
-
-const environment = process.env.REACT_APP_ENV;
-const serverUrl = process.env.REACT_APP_SERVER_URL;
-
-const computeUrl = path => {
-  if (environment === 'development') {
-    return path;
-  }
-  return `${serverUrl}${path}`;
-};
+import { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
+import { computeUrl } from '../computeUrl';
+import { authAxios } from '../authAxios';
 
 export const useUser = () => {
-  const { accessToken } = useAuth();
+  const [user, setUser] = useState(null);
 
-  const [
-    getUser,
-    { data: userData, error: userError, loading: userLoading },
-  ] = useLazyAxios({
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
+  const { data: userData, error: userError, refetch } = useQuery(
+    'user',
+    async () => {
+      const result = await authAxios({
+        method: 'get',
+        url: computeUrl('/api/me'),
+      });
+
+      return result.data;
     },
-    url: computeUrl('/api/me'),
-  });
+    { enabled: false },
+  );
 
-  return [getUser, { userData, userError, userLoading }];
+  useEffect(() => {
+    setUser(userData);
+  }, [userData]);
+
+  return [refetch, { setUser, userData: user, userError }];
 };

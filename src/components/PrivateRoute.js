@@ -5,10 +5,10 @@ import { AuthContext, UserContext } from '../contexts';
 
 export const PrivateRoute = ({ ...props }) => {
   const { isLoggedIn } = useContext(AuthContext);
-  const { user } = useContext(UserContext);
+  const { userData } = useContext(UserContext);
 
   if (isLoggedIn) {
-    return user ? (
+    return userData ? (
       // eslint-disable-next-line react/jsx-props-no-spreading
       <Route {...props} />
     ) : (

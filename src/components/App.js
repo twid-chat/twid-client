@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import io from 'socket.io-client';
 import { Chat } from './Chat';
 import { Loader } from './Loader';
 import { Login } from './Login';
@@ -9,75 +8,26 @@ import { NotFound } from './NotFound';
 import { Register } from './Register';
 import { PublicRoute } from './PublicRoute';
 import { PrivateRoute } from './PrivateRoute';
-import { useAuth, useUser } from '../hooks';
+import { useSession } from '../hooks';
 import { AuthContext, SocketContext, UserContext } from '../contexts';
-import { computeSocketUrl } from '../computeUrl';
 import './App.css';
 
-let socket;
-
 export const App = () => {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
   const {
-    accessToken,
+    appLoading,
     getLogin,
     getLogout,
     getRegister,
-    getToken,
     isLoggedIn,
-    loginData,
     loginError,
     loginLoading,
-    logoutData,
     logoutLoading,
     registerError,
     registerLoading,
-    tokenError,
-  } = useAuth();
-  const [getUser, { userData, userError }] = useUser();
-
-  // app initially loads, check for valid
-  // access token if user is not logged in
-  useEffect(() => {
-    if (!loginData && !logoutData && accessToken) {
-      getToken();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getToken, loginData, logoutData]);
-
-  // if the request for a token fails,
-  // set the loading status to false
-  useEffect(() => {
-    if (tokenError || !accessToken) {
-      setLoading(false);
-    }
-  }, [accessToken, tokenError]);
-
-  // if a user is logged in and an accessToken
-  // is present, fetch for the user data
-  useEffect(() => {
-    if (isLoggedIn && accessToken) {
-      getUser();
-      socket = io(computeSocketUrl(), {
-        path: '/socket',
-        query: {
-          accessToken,
-        },
-      });
-    }
-  }, [accessToken, getUser, isLoggedIn]);
-
-  // once the userData returns, set the user
-  // state and set the loading status to false
-  useEffect(() => {
-    if (userData) {
-      setUser(userData);
-      setLoading(false);
-    } else if (userError) {
-      setLoading(false);
-    }
-  }, [userData, userError]);
+    setUser,
+    socket,
+    userData,
+  } = useSession();
 
   if (logoutLoading) {
     return <Loader size={64} />;
@@ -86,7 +36,6 @@ export const App = () => {
   return (
     <AuthContext.Provider
       value={{
-        accessToken,
         getLogin,
         getLogout,
         getRegister,
@@ -97,9 +46,9 @@ export const App = () => {
         registerLoading,
       }}
     >
-      <UserContext.Provider value={{ setUser, user }}>
+      <UserContext.Provider value={{ setUser, userData }}>
         <SocketContext.Provider value={{ socket }}>
-          {loading ? (
+          {appLoading ? (
             <Loader size={64} />
           ) : (
             <Router>

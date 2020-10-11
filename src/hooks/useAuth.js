@@ -1,15 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useLazyAxios } from 'use-axios-client';
-
-const environment = process.env.REACT_APP_ENV;
-const serverUrl = process.env.REACT_APP_SERVER_URL;
-
-const computeUrl = path => {
-  if (environment === 'development') {
-    return path;
-  }
-  return `${serverUrl}${path}`;
-};
+import axios from 'axios';
+import { useMutation } from 'react-query';
+import { computeUrl } from '../computeUrl';
 
 export const useAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -18,40 +10,58 @@ export const useAuth = () => {
 
   const [
     getLogin,
-    { data: loginData, error: loginError, loading: loginLoading },
-  ] = useLazyAxios({
-    method: 'POST',
-    url: computeUrl('/auth/login'),
+    { data: loginData, error: loginError, isLoading: loginLoading },
+  ] = useMutation(async credentials => {
+    const result = await axios({
+      data: credentials,
+      method: 'post',
+      url: computeUrl('/auth/login'),
+    });
+    return result.data;
   });
 
   const [
     getRegister,
-    { data: registerData, error: registerError, loading: registerLoading },
-  ] = useLazyAxios({
-    method: 'POST',
-    url: computeUrl('/auth/register'),
+    { data: registerData, error: registerError, isLoading: registerLoading },
+  ] = useMutation(async credentials => {
+    const result = await axios({
+      data: credentials,
+      method: 'post',
+      url: computeUrl('/auth/register'),
+    });
+    return result.data;
   });
 
   const [
     getLogout,
-    { data: logoutData, loading: logoutLoading },
-  ] = useLazyAxios({
-    data: {
-      token:
-        loginData?.refreshToken || registerData?.refreshToken || refreshToken,
-    },
-    method: 'POST',
-    url: computeUrl('/auth/logout'),
+    { data: logoutData, isLoading: logoutLoading },
+  ] = useMutation(async () => {
+    const result = await axios({
+      data: {
+        token:
+          loginData?.refreshToken || registerData?.refreshToken || refreshToken,
+      },
+      method: 'post',
+      url: computeUrl('/auth/logout'),
+    });
+    return result.data;
   });
 
-  const [getToken, { data: tokenData, error: tokenError }] = useLazyAxios({
-    data: {
-      token:
-        loginData?.refreshToken || registerData?.refreshToken || refreshToken,
+  const [getToken, { data: tokenData, error: tokenError }] = useMutation(
+    async () => {
+      const result = await axios({
+        data: {
+          token:
+            loginData?.refreshToken ||
+            registerData?.refreshToken ||
+            refreshToken,
+        },
+        method: 'post',
+        url: computeUrl('/auth/token'),
+      });
+      return result.data;
     },
-    method: 'POST',
-    url: computeUrl('/auth/token'),
-  });
+  );
 
   // user registers and access token is requested
   useEffect(() => {
